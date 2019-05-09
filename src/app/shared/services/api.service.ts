@@ -1,37 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { URL } from './commonUrlService';
 import { HttpHeaderService } from './http-header.service';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class ApiService {
-    detail: any;  
-  // baseUrL = 'http://192.168.0.32:8080/core/api/v1/ccp-invoice';
-    //environment: any = { "api_url": URL.baseUrL+'hancock' };
+    detail: any;
+
     environment: any = URL.baseUrL;
-    
-    constructor(public http: HttpClient,public http1:HttpHeaderService) {
+
+    constructor(public http: HttpClient,public http2:Http) {
         console.log(this.environment);
-    }1
+    } 1
     protected standardHeaders() {
         return {
             'Content-Type': 'application/json',
             'token': '12345',
         };
     }
-    deletePaymentList(paymentId,invoiceId){
+
+    userAuthentication(data){
+        let formdata: FormData = new FormData();
+        formdata.append('username', data.userName);
+        formdata.append('password', data.password);
+
+        let USER_LOGIN_URL = "http://192.168.0.86/CRM_API/userLogin.php";
+        const req = new HttpRequest('POST', USER_LOGIN_URL, formdata, {
+            reportProgress: true,
+        });
+
+        return this.http.request(req);
+    }
+
+
+
+
+
+    deletePaymentList(paymentId, invoiceId) {
         // return  this.http1.post( this.invoiceEnvoironmentUrl.api_url+'/deletePaymentDetail?paymentId='+paymentId+'&invoiceId='+invoiceId+'&userId='+localStorage.loginuserid,'').map((response) => (response.json()), (error) => (error));;
         //http://localhost:9092/core/api/v1/ccp-invoice/deletePaymentDetail?paymentId=156&&invoiceId=673
-       }
+    }
     save(object: any, url) {
         return this.http.post(this.environment.api_url + url, object);
     }
 
-    saveArray(any,status, url) {
-        console.log(any);
-        return this.http1.post(this.environment.api_url + url +"?status="+status+"&userId="+localStorage.loginuserid, any).map((response) => (response.json()), (error) => (error));;;
-    }
+    // saveArray(any,status, url) {
+    //     console.log(any);
+    //     return this.http1.post(this.environment.api_url + url +"?status="+status+"&userId="+localStorage.loginuserid, any).map((response) => (response.json()), (error) => (error));;;
+    // }
 
     getByObject(object: any, url) {
         return this.http.post(this.environment.api_url + url, object);
@@ -140,7 +158,7 @@ export class ApiService {
     //     return this.http.post(this.environment.api_url + url+'?domainName='+domainName, formdata,options);
     // }
 
-    
+
 }
 
 

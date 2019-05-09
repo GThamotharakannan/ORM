@@ -2,21 +2,60 @@
     <div class="row justify-content-md-center">
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-             
-            <form role="form">
+
+            <form [formGroup]='authenticationForm'>
                 <div class="form-content">
-                    <div class="form-group">
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="" 
-                        placeholder="Email">
+                    <div class="form-group form-group-default required">
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id=""
+                            formControlName='userName' placeholder="Email" required #userName pattern="^([A-Za-z0-9\.\_])+\@([A-Za-z0-9])[+\.([A-Za-z})]+\.([A-Za-z]{2,4})$">
+                        <div *ngIf="authenticationForm.controls['userName'].errors && !authenticationForm.controls['userName'].pristine"
+                            class="error error-msg">
+
+                            <div [hidden]="!authenticationForm.controls['userName'].errors.required">
+                                <small> User Name is required.</small>
+                            </div>
+
+                            <div [hidden]="!authenticationForm.controls['userName'].errors.pattern">
+                                <small> User Name is Invalid.</small>
+                            </div>
+                            <!-- <div *ngIf="authenticationForm.controls['username'].errors.invalidName
+                                && !adduserForm.controls['username'].errors.required">
+                            <small> User Name not valid.</small>
+                          </div> -->
+                            <div
+                                *ngIf="authenticationForm.controls['userName'].value.trim()?.length === 0 && !authenticationForm.controls['userName'].errors.required">
+                                <small> Please Fill User Name</small>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        <input type="password" class="form-control input-underline input-lg" id=""
+                            formControlName='password' placeholder="Password" #password>
+                            <div *ngIf="authenticationForm.controls['password'].errors && !authenticationForm.controls['password'].pristine"
+                            class="error error-msg">
+
+                            <div [hidden]="!authenticationForm.controls['password'].errors.required">
+                                <small> Password is required.</small>
+                            </div>
+                            <!-- <div *ngIf="authenticationForm.controls['username'].errors.invalidName
+                                && !adduserForm.controls['username'].errors.required">
+                            <small> User Name not valid.</small>
+                          </div> -->
+                            <div
+                                *ngIf="authenticationForm.controls['password'].value.trim()?.length === 0 && !authenticationForm.controls['password'].errors.required">
+                                <small> Please Fill User Name</small>
+                            </div>
+                        </div>
                     </div>
+                    <div class='error' *ngIf='showError'>Invalid UserName/Password</div>
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()">Log in</a>
+
+                <a class="btn rounded-btn" (click)="onLoggedin()" disabled="authenticationForm.invalid">Log in</a>
                 &nbsp;
                 <!-- <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a> -->
+
+                <!-- [routerLink]="['/dashboard']" -->
             </form>
         </div>
     </div>

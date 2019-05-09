@@ -8,12 +8,14 @@ import { LanguageTranslationModule } from './shared/modules/language-translation
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports: [
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
+        HttpModule,
         HttpClientModule,
         LanguageTranslationModule,
         AppRoutingModule
