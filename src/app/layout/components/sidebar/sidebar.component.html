@@ -157,15 +157,15 @@
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;
             <span>{{ 'Dashboard' | translate }}</span>
         </a>
-        <a [routerLink]="['/unit']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/unit']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="role =='Manager' ">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>Unit</span>
         </a>
-        <a [routerLink]="['/assignunit']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/assignunit']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="role =='Supervisor' ">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>Assign Unit</span>
         </a>
-        <a [routerLink]="['/myunit']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/myunit']" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="role =='Operator' ">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>Manage My Unit</span>
         </a>

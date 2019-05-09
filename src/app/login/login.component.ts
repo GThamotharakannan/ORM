@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
                     this.responseDetail = response;
                     if (this.responseDetail.body.status) {
                         this.showError = false;
-                        localStorage.setItem('userDetail', JSON.stringify(this.responseDetail.body));
+                        localStorage.setItem('userDetail', JSON.stringify(this.responseDetail.body.result));
+                        debugger
+                        localStorage.setItem('role',this.responseDetail.body.result.rolename)
                         this.router.navigate(['/dashboard']);
                     } else {
                         this.showError = true;

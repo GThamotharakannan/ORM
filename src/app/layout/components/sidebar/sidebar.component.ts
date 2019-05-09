@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
     pushRightClass: string;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
+    role: any;
 
     constructor(private translate: TranslateService, public router: Router) {
         this.router.events.subscribe(val => {
@@ -32,6 +33,7 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
+        this.role = localStorage.role;
     }
 
 
